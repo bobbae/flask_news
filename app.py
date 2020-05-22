@@ -3,6 +3,7 @@ from newscatcher import Newscatcher
 from newscatcher import urls, describe_url
 import logging
 from logging.handlers import RotatingFileHandler
+import re
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
@@ -21,6 +22,11 @@ topics = [ 'tech', 'news', 'business', 'science', 'finance',
         'food', 'politics', 'economics', 'travel', 'entertainment', 
         'music', 'sport', 'world' ]
 
+def cleanhtml(raw_html):
+    cleanr = re.compile('<.*?>')
+    cleantext = re.sub(cleanr, '', raw_html)
+    return cleantext
+
 def get_news(sitename):
     nc = Newscatcher(website = sitename)
     results = nc.get_news()
@@ -31,6 +37,7 @@ def get_news(sitename):
     #atlantic = Newscatcher(website = urls_pol[1], topic = 'politics')    
     for a in articles:
         a.source = sitename
+        a.summary = cleanhtml(a.summary)
     return articles
 
 if __name__=='__main__':
