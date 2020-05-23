@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Latest News and Updates">
+    <meta name="title" content="Bob's News">
     <meta name="description" content="A news aggregator for bob">
     <meta name="keywords" content="latest, news">
 
-    <title>Bob's News: Latest News and Updates</title>
+    <title>Bob's News</title>
 
     <link rel="shortcut icon" href="/static/favicon.ico">
 
@@ -62,7 +62,7 @@
 <main role="main" style="background: #e9ecef">
     <div class="jumbotron" style="background: #ffffff">
         <div class="container">
-            <h1 class="display-4 pb-4 mb-4">Latest News and Updates</h1>
+            <h1 class="display-4 pb-4 mb-4">Bob's News</h1>
 
             <!--
             <div class="row">
@@ -105,8 +105,9 @@
                     </a></p>
                     <p>{{ each.summary }}</p>
                     <p> Published on {{ each.published }}</p>
-                    <p>
+                    <!--<p>
                     <a class="btn btn-secondary" href="{{ each.links[0].href  }}" target="_blank">View details</a></p>
+                    -->
                 </div>
                 
                 {% endfor %}
