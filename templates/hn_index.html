@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="title" content="Bob's News">
+    <meta name="description" content="A news aggregator for bob">
+    <meta name="keywords" content="latest, news">
+
+    <title>Bob's News</title>
+
+    <link rel="shortcut icon" href="/static/favicon.ico">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Fontawesome -->
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        div.social-icons a {
+            color: #007bff;
+        }
+
+        footer {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            display: block;
+            color: #ffffff;
+        }
+
+        footer ul {
+            padding-left: 0;
+            list-style: none;
+            margin-bottom: 0;
+        }
+
+        footer a {
+            color: #ffffff;
+        }
+    </style>
+
+</head>
+<body>
+
+<main role="main" style="background: #e9ecef">
+    <div class="jumbotron" style="background: #ffffff">
+        <div class="container">
+            <h1 class="display-4 pb-4 mb-4">Bob's News</h1>
+
+            <!--
+            <div class="row">
+                <div class="col-md-4">
+                    <form>
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label class="sr-only" for="email">Name</label>
+                                <input type="email" class="form-control mb-2" id="email" name="email"
+                                       placeholder="Your Email Address">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-2">Subscribe</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-8 social-icons">Follow us on :
+                    <a href="https://twitter.com/beebisbob" class="pr-1" target="_blank"><i
+                            class="fab fa-twitter fa-lg"></i></a>
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            
+            <div class="row pt-2 pb-2">
+                {% for each in news %} 
+                
+                <div class="col-md-4">
+                    <p class="font-weight-bold">
+                    <a href="{{ each['url'] }}" target="_blank" style="color: #222222">
+                        {{ each['title'] }}</a>
+                    </p>
+                    <a href="https://news.ycombinator.com/item?id={{ each['id'] }}" target="_blank" style="color: #333333">
+                        Points: {{ each['score'] }}<br>
+                        Comments: {{ each['descendants'] }}</a>
+                    <p> Published:  {{  each['time'] }}</p>
+                </div>
+                
+                {% endfor %}
+            </div>
+            <hr>
+            
+        </div>
+    </div>
+</main>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="?page={{ next_page }}">Next</a></li>
+    </ul>
+</nav>
+
+
+<footer class="footer bg-dark">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12 col-lg-12 text-center">
+                    <div class="col-md-12 col-sm-12 col-lg-12 copyright">
+                        <p>Copyright © 2020. All rights reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
