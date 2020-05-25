@@ -109,7 +109,12 @@
                     <a class="btn btn-secondary" href="{{ each.links[0].href  }}" target="_blank">View details</a></p>
                     -->
                 </div>
-                
+                {% else %}
+                <div class="col-md-12">
+                    <p class="font-weight-bold">
+                    {{ message }}
+                    </p>
+                </div>
                 {% endfor %}
             </div>
             <hr>

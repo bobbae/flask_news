@@ -35,39 +35,44 @@ HN = 'https://hacker-news.firebaseio.com/v0'
 @app.route('/')
 def myindex():
     app.logger.info("myindex")
-    page = request.args.get('page', 1)
-    source = request.args.get('source', '')
-    limit = request.args.get('limit', 20)
-
-    try: 
-        page = int(page)
-    except:
-        page = 1
-    if page < 1:
-        page = 1
-
-    try: 
-        limit = int(limit)
-    except:
-        limit = 20
-    if limit < 1:
-        limit = 20
-
-    if source == "hn":
-        return render_template('hn_index.html',news=get_hn(), next_page=page + 1)
-
-    if len(sites) < page:
-        app.logger.info("page %d out of range", page)
-        return render_template('index.html',news=[], next_page= 1)
-
-    if source != '':
-        if not source in sites:
-            return render_template('index.html',news=[], next_page= 1)
-    else:
-        source = sites[page - 1]
-
+    source = sites[0]
+    page, limit = getparams()
     return render_template('index.html',news=get_news(source), next_page=page + 1)
 
+@app.route('/hn')
+def do_hn():
+    app.logger.info("do_hn")
+    page,limit = getparams()
+    return render_template('hn_index.html',news=get_hn(), next_page=page + 1)
+
+def getparams():
+    page = request.args.get('page', 1)
+    limit = request.args.get('limit', 20)
+    page = checkparam(page,1)
+    limit = checkparam(limit,20)
+    return page,limit
+
+@app.route('/source/<source>')
+def do_source(source):
+    app.logger.info("do_source")
+    page,limit = getparams()
+    if not source in sites:
+        return render_template('index.html',news=[], next_page= 1, 
+                    message='Invalid data source {}'.format(source))
+    return render_template('index.html',news=get_news(source), next_page=page + 1)
+    
+@app.route('/sources')
+def list_sources():
+    return render_template('index.html',news=[], next_page=1,
+            message='Available sources are: {} '.format(sites))
+def checkparam(p,default):
+    try:
+        n = int(p)
+    except:
+        n = default
+    if p < default:
+        n = default
+    return n
 
 def cleanhtml(raw_html):
     cleanr = re.compile('<.*?>')
@@ -94,7 +99,7 @@ def get_hn():
     responses = loop.run_until_complete(get_topics())
     #for r in res.json()[offset:]:
     news = []
-    print("responses {}".format(responses))
+    #print("responses {}".format(responses))
 
     for r in responses:
         #n = requests.get(HN+'/item/{}.json'.format(r))
@@ -124,7 +129,7 @@ async def get_topics():
             for t in topstories[:limit]
         ]
         for response in await asyncio.gather(*futures):
-            print("append {}".format(response))
+            #print("append {}".format(response))
             responses.append(response)
     return responses
 
