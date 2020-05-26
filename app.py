@@ -1,4 +1,5 @@
-from flask import (Flask,render_template,request,Response,jsonify)
+from flask import (Flask,render_template,request,Response,jsonify,redirect,url_for)
+import random
 from newscatcher import Newscatcher
 from newscatcher import urls, describe_url
 import logging
@@ -22,28 +23,20 @@ topics = [ 'tech', 'news', 'business', 'science', 'finance',
         'food', 'politics', 'economics', 'travel', 'entertainment', 
         'music', 'sport', 'world' ]
 
-sites = [ 'latimes.com', 'reuters.com',  'nytimes.com', 'theatlantic.com', 
-            'yahoo.com', 'bbc.co.uk', 'ft.com', 'pbs.org', 'nbcnews.com',
-          'washingtonpost.com', 'independent.co.uk', 'cnbc.com', 'cnn.com',
-          'newyorker.com', 'nypost.com', 'qz.com', 'dw.com', 'rt.com',
-          'nymag.com', 'vox.com', 'theglobeandmail.com', 'express.co.uk',
-          'salon.com', 'vanityfair.com', 'standard.co.uk', 'chicagotribune.com'
-        ]
+sites = urls(language='EN')
 
 HN = 'https://hacker-news.firebaseio.com/v0'
 
 @app.route('/')
 def myindex():
     app.logger.info("myindex")
-    source = sites[0]
-    page, limit = getparams()
-    return render_template('index.html',news=get_news(source), next_page=page + 1)
+    return redirect(url_for('do_hn'))
 
 @app.route('/hn')
 def do_hn():
     app.logger.info("do_hn")
     page,limit = getparams()
-    return render_template('hn_index.html',news=get_hn(), next_page=page + 1)
+    return render_template('hn_index.html',news=get_hn(page,limit), next_page=page + 1)
 
 def getparams():
     page = request.args.get('page', 1)
@@ -56,21 +49,24 @@ def getparams():
 def do_source(source):
     app.logger.info("do_source")
     page,limit = getparams()
+    if source == 'random':
+        source = random.choice(sites)
     if not source in sites:
         return render_template('index.html',news=[], next_page= 1, 
                     message='Invalid data source {}'.format(source))
-    return render_template('index.html',news=get_news(source), next_page=page + 1)
+    return render_template('index.html',news=get_news(source,page,limit), next_page=page + 1)
     
 @app.route('/sources')
 def list_sources():
     return render_template('index.html',news=[], next_page=1,
             message='Available sources are: {} '.format(sites))
+
 def checkparam(p,default):
     try:
         n = int(p)
     except:
         n = default
-    if p < default:
+    if n < default:
         n = default
     return n
 
@@ -79,14 +75,15 @@ def cleanhtml(raw_html):
     cleantext = re.sub(cleanr, '', raw_html)
     return cleantext
 
-def get_news(source):
+def get_news(source,page,limit):
     nc = Newscatcher(website = source)
     results = nc.get_news()
     articles = results['articles']
     app.logger.info("len articles %d", len(articles))
     i= 0
     retval = []
-    for a in articles:
+    offset = limit *( page - 1)
+    for a in articles[offset:limit+offset]:
         # skip articles without summary
         if 'summary' in a.keys():
             b = a
@@ -95,11 +92,9 @@ def get_news(source):
             retval.append(b)
     return retval
 
-def get_hn():
-    responses = loop.run_until_complete(get_topics())
-    #for r in res.json()[offset:]:
+def get_hn(page, limit):
+    responses = loop.run_until_complete(get_topics(page, limit))
     news = []
-    #print("responses {}".format(responses))
 
     for r in responses:
         #n = requests.get(HN+'/item/{}.json'.format(r))
@@ -111,10 +106,8 @@ def get_hn():
         news.append(nj)
     return news
 
-async def get_topics():
+async def get_topics(page, limit):
     res = requests.get(HN+'/topstories.json')
-    limit = 20
-    page = 1
     offset = limit *( page - 1)
     topstories = res.json()
     responses = []
@@ -126,10 +119,9 @@ async def get_topics():
                 requests.get, 
                 'https://hacker-news.firebaseio.com/v0/item/{}.json'.format(t)
             )
-            for t in topstories[:limit]
+            for t in topstories[offset:limit+offset]
         ]
         for response in await asyncio.gather(*futures):
-            #print("append {}".format(response))
             responses.append(response)
     return responses
 
@@ -143,3 +135,4 @@ def describe_sources(source):
 if __name__=='__main__':
     #asyncio.set_event_loop(asyncio.new_event_loop())
     app.run(threaded=True, port=5000)
+
