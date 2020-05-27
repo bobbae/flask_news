@@ -31,6 +31,10 @@ topics = [ 'tech', 'news', 'business', 'science', 'finance',
 sites = urls(language='EN')
 
 HN = 'https://hacker-news.firebaseio.com/v0'
+res = requests.get('https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
+bingurl = res.json()
+bimgurl = 'https://bing.com/' + bingurl['images'][0]['url']
+
 
 @app.route('/')
 def myindex():
@@ -41,7 +45,7 @@ def myindex():
 def do_hn():
     app.logger.info("do_hn")
     page,limit = getparams()
-    return render_template('index.html', title='HN', news=get_hn(page,limit), next_page=page + 1)
+    return render_template('index.html', title='HN', imgurl=bimgurl, news=get_hn(page,limit), next_page=page + 1)
 
 def getparams():
     page = request.args.get('page', 1)
@@ -57,13 +61,13 @@ def do_source(source):
     if source == 'random':
         source = random.choice(sites)
     if not source in sites:
-        return render_template('index.html', title='Message', news=[], next_page= 1, 
+        return render_template('index.html', title='Message', imgurl=bimgurl, news=[], next_page= 1, 
                     message='Invalid data source {}'.format(source))
-    return render_template('index.html', title=source, news=get_news(source,page,limit), next_page=page + 1)
+    return render_template('index.html', title=source, imgurl=bimgurl, news=get_news(source,page,limit), next_page=page + 1)
     
 @app.route('/sources')
 def list_sources():
-    return render_template('index.html',news=[], next_page=1,
+    return render_template('index.html',title='Sources',news=[], imgurl=bimgurl, next_page=1,
             message='Available sources are: {} '.format(sites))
 
 def checkparam(p,default):

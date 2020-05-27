@@ -30,9 +30,9 @@
   </div>
 </nav>
 <main role="main" style="background: #e9ecef">
-    <div class="jumbotron" style="background: #ffffff">
+    <div class="jumbotron" style="background-image: url('{{ imgurl }}')">
         <div class="container">
-          <h1 class="display-4 pb-4 mb-4">Headlines from {{ title }} </h1>
+          <h1 class="display-4 pb-4 mb-4"></h1>
 
             <!--
             <div class="row">
@@ -69,7 +69,7 @@
                       <div class="col-md-4">
                           <p class="font-weight-bold">
                           <a href="{{ each['url'] }}" target="_blank" style="color: #222222">
-                              {{ each['title'] }}</a>
+                              {{ each['title'] }} (HN)</a>
                           </p>
                           <a href="https://news.ycombinator.com/item?id={{ each['id'] }}" target="_blank" style="color: #333333">
                               Points: {{ each['score'] }}<br>
