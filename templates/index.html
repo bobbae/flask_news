@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Bob's NewsCatcher">
+    <meta name="title" content="Bob's {{ title }}">
     <meta name="description" content="A news aggregator for bob">
     <meta name="keywords" content="latest, news">
 
-    <title>Bob's NewsCatcher</title>
+    <title>Bob's {{ title }}</title>
 
     {% include 'head1.html' %}
 
@@ -65,20 +65,32 @@
             
             <div class="row pt-2 pb-2">
                 {% for each in news %} 
-                
-                <div class="col-md-4">
-                    <p class="font-weight-bold">
-                    <a href="{{ each.links[0].href }}" target="_blank" style="color: #222222">
-                        {{ each.title }}</a> <a href="{{ each.links[0].href }}" target="_blank"
-                                                    style="color: #222222">
-                        ({{ each.source }} )
-                    </a></p>
-                    <p>{{ each.summary }}</p>
-                    <p> Published on {{ each.published }}</p>
-                    <!--<p>
-                    <a class="btn btn-secondary" href="{{ each.links[0].href  }}" target="_blank">View details</a></p>
-                    -->
-                </div>
+                    {% if title == "HN" %}
+                      <div class="col-md-4">
+                          <p class="font-weight-bold">
+                          <a href="{{ each['url'] }}" target="_blank" style="color: #222222">
+                              {{ each['title'] }}</a>
+                          </p>
+                          <a href="https://news.ycombinator.com/item?id={{ each['id'] }}" target="_blank" style="color: #333333">
+                              Points: {{ each['score'] }}<br>
+                              Comments: {{ each['descendants'] }}</a>
+                          <p> Published:  {{  each['time'] }}</p>
+                      </div>
+                    {% else %}
+                      <div class="col-md-4">
+                          <p class="font-weight-bold">
+                          <a href="{{ each.links[0].href }}" target="_blank" style="color: #222222">
+                              {{ each.title }}</a> <a href="{{ each.links[0].href }}" target="_blank"
+                                                          style="color: #222222">
+                              ({{ each.source }} )
+                          </a></p>
+                          <p>{{ each.summary }}</p>
+                          <p> Published on {{ each.published }}</p>
+                          <!--<p>
+                          <a class="btn btn-secondary" href="{{ each.links[0].href  }}" target="_blank">View details</a></p>
+                          -->
+                      </div>
+                    {% endif %}
                 {% else %}
                 <div class="col-md-12">
                     <p class="font-weight-bold">

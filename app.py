@@ -23,6 +23,7 @@ app.logger.addHandler(handler)
 app.logger.info('starting')
 loop = asyncio.get_event_loop()
 
+# not yet used
 topics = [ 'tech', 'news', 'business', 'science', 'finance', 
         'food', 'politics', 'economics', 'travel', 'entertainment', 
         'music', 'sport', 'world' ]
@@ -40,7 +41,7 @@ def myindex():
 def do_hn():
     app.logger.info("do_hn")
     page,limit = getparams()
-    return render_template('hn_index.html',news=get_hn(page,limit), next_page=page + 1)
+    return render_template('index.html', title='HN', news=get_hn(page,limit), next_page=page + 1)
 
 def getparams():
     page = request.args.get('page', 1)
@@ -56,9 +57,9 @@ def do_source(source):
     if source == 'random':
         source = random.choice(sites)
     if not source in sites:
-        return render_template('index.html',news=[], next_page= 1, 
+        return render_template('index.html', title='Message', news=[], next_page= 1, 
                     message='Invalid data source {}'.format(source))
-    return render_template('index.html',news=get_news(source,page,limit), next_page=page + 1)
+    return render_template('index.html', title=source, news=get_news(source,page,limit), next_page=page + 1)
     
 @app.route('/sources')
 def list_sources():
