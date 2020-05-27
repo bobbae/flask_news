@@ -28,6 +28,7 @@ Thumbs.db
 
 # ignore log files and databases
 *.log
+*.log.[1-9]*
 *.sql
 *.sqlite
 

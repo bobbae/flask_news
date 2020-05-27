@@ -11,6 +11,10 @@ from datetime import datetime
 import concurrent.futures
 import asyncio
 
+#import yfiance as yf
+#q = yf.Ticker('aapl')
+#q.info['regularMarketPrice']
+
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 handler = RotatingFileHandler('flask_news.log',maxBytes=10000,backupCount=1)

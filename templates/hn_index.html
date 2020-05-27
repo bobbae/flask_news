@@ -9,52 +9,7 @@
 
     <title>Bob's HackerNews</title>
 
-    <link rel="shortcut icon" href="/static/favicon.ico">
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-    <!-- Fontawesome -->
-    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-        div.social-icons a {
-            color: #007bff;
-        }
-
-        footer {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-            display: block;
-            color: #ffffff;
-        }
-
-        footer ul {
-            padding-left: 0;
-            list-style: none;
-            margin-bottom: 0;
-        }
-
-        footer a {
-            color: #ffffff;
-        }
-    </style>
+    {% include 'head1.html' %}
 
 </head>
 <body>
@@ -66,57 +21,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/hn">HN <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/random">random</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/latimes.com">latimes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/nytimes.com">nytimes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/reuters.com">reuters</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/bbc.com">bbc</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/cnn.com">cnn</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/wired.com">wired</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/wsj.com">wsj</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/digg.com">digg</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/cnbc.com">cnbc</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/sciencemag.com">sciencemag</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/sciencedaily.com">sciencedaily</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/marketwatch.com">marketwatch</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/newyorker.com">newyorker</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/source/thedailybeast.com">thedailybeast</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
+      {% include 'menu.html' %}
     </ul>
     <form class="form-inline mt-2 mt-md-0">
       <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
