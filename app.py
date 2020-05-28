@@ -9,6 +9,7 @@ import pdb
 import requests
 from datetime import datetime
 import concurrent.futures
+from html import unescape
 import asyncio
 
 #import yfiance as yf
@@ -94,8 +95,9 @@ def checkparam(p,default):
     return n
 
 def cleanhtml(raw_html):
+    unescaped = unescape(raw_html)
     cleanr = re.compile('<.*?>')
-    cleantext = re.sub(cleanr, '', raw_html)
+    cleantext = re.sub(cleanr, '', unescaped)
     return cleantext
 
 
