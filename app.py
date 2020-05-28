@@ -44,7 +44,7 @@ bimgurl = 'https://bing.com/' + bingurl['images'][0]['url']
 @app.route('/')
 def myindex():
     app.logger.info("myindex")
-    return redirect(url_for('do_hn'))
+    return redirect(url_for('/source/random'))
 
 @app.route('/twp')
 def do_twp():
