@@ -78,6 +78,14 @@
                               Comments: {{ each['descendants'] }}</a>
                           <p> Published:  {{  each['time'] }}</p>
                       </div>
+                    {% elif title == 'twp' %}
+                      <div class="col-md-12">
+                          <p class="font-weight-bold">
+                          <a href="http://threewordphrase.com/{{ each }}.htm">{{ each }}<br>
+                            <img height="300" src="http://threewordphrase.com/{{ each }}.gif" >
+                          </a>
+                          </p>
+                      </div>
                     {% else %}
                       <div class="col-md-4">
                           <p class="font-weight-bold">

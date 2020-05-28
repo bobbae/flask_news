@@ -28,6 +28,10 @@ topics = [ 'tech', 'news', 'business', 'science', 'finance',
         'food', 'politics', 'economics', 'travel', 'entertainment', 
         'music', 'sport', 'world' ]
 
+twp = []
+with open('twp.txt','r') as f:
+    twp = f.read().split()
+
 sites = urls(language='EN')
 
 HN = 'https://hacker-news.firebaseio.com/v0'
@@ -40,6 +44,15 @@ bimgurl = 'https://bing.com/' + bingurl['images'][0]['url']
 def myindex():
     app.logger.info("myindex")
     return redirect(url_for('do_hn'))
+
+@app.route('/twp')
+def do_twp():
+    app.logger.info("do_twp")
+    page,limit=getparams()
+    randlist =[]
+    for i in range(0,limit):
+        randlist.append(twp[random.randint(0, len(twp)-1)])
+    return render_template('index.html', title='twp',imgurl=bimgurl,news=randlist,next_page=page+1)
 
 @app.route('/hn')
 def do_hn():
@@ -67,6 +80,7 @@ def do_source(source):
     
 @app.route('/sources')
 def list_sources():
+    app.logger.info("list_sources")
     return render_template('index.html',title='Sources',news=[], imgurl=bimgurl, next_page=1,
             message='Available sources are: {} '.format(sites))
 
@@ -83,6 +97,7 @@ def cleanhtml(raw_html):
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', raw_html)
     return cleantext
+
 
 def get_news(source,page,limit):
     nc = Newscatcher(website = source)
