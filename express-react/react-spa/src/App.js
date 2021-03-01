@@ -14,8 +14,10 @@ this.state = {
  }
 async componentDidMount() {
   // Call self-hosted API to get users response
-  const res = await fetch('/users');
+  console.log("fetch ${DEV_URL}/users");
+  const res = await fetch(`${DEV_URL}/users`);
   const users = await res.json();
+  console.log("fetched users",users);
   this.setState({
    users
   });

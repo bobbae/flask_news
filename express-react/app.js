@@ -27,10 +27,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-/* GET React App */
+
 app.use(function(req, res, next) {
+	console.log('serving public/app.html');
 	res.sendFile(path.join(__dirname, 'public', 'app.html'));
 });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
