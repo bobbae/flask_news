@@ -1,3 +1,2 @@
 # examples
-
-Go, Rust and V example programs.
+example programs in various languages: Go, Rust, nodejs, V, python, etc.
