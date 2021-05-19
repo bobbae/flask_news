@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/bobbae/examples/gomisc/trie"
+)
 
 func main() {
-	trie := NewTrie()
+	trie := trie.NewTrie()
 	const fv = "first"
 	cases := []struct {
 		key   string
