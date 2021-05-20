@@ -23,8 +23,6 @@ func (s byLength) Less(i, j int) bool {
 	return len(s[i]) > len(s[j]) //reverse
 }
 
-
-
 func main() {
 	filename := flag.String("filename", "", "input file name")
 	flag.Parse()
@@ -57,16 +55,16 @@ func main() {
 	}
 	sort.Sort(byLength(words))
 
-	for _,  word :=  range words {
+	for _, word := range words {
 		if isLCW(trie, word, 0) {
-			fmt.Println("LCW",word)
+			fmt.Println("LCW", word, "len", len(word))
 			break
 		}
 	}
 }
 
-func isLCW(trie *trie.Trie, word string, iter int) bool{
-	if iter >0 && trie.Get(word) != nil {
+func isLCW(trie *trie.Trie, word string, iter int) bool {
+	if iter > 0 && trie.Get(word) != nil {
 		return true
 	}
 	prefixes := findPrefixes(trie, word)
@@ -80,11 +78,11 @@ func isLCW(trie *trie.Trie, word string, iter int) bool{
 	return false
 }
 
-func split(word string, idx int) (string,string) {
+func split(word string, idx int) (string, string) {
 	return word[:idx], word[idx:]
 }
 
-func findPrefixes(trie *trie.Trie, word string) []int{
+func findPrefixes(trie *trie.Trie, word string) []int {
 	prefixes := []int{}
 	for i := 1; i < len(word); i++ {
 		p := word[:i]
@@ -94,4 +92,3 @@ func findPrefixes(trie *trie.Trie, word string) []int{
 	}
 	return prefixes
 }
-
