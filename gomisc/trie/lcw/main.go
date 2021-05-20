@@ -66,7 +66,7 @@ func main() {
 }
 
 func isLCW(trie *trie.Trie, word string, iter int) bool{
-	if iter == 0 && trie.Get(word) != nil {
+	if iter >0 && trie.Get(word) != nil {
 		return true
 	}
 	prefixes := findPrefixes(trie, word)
