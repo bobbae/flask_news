@@ -25,6 +25,7 @@ hashes = {}
 
 for f in files:
     if os.path.isfile(f):
+        #print("looking at ", f)
         hashval = hashlib.md5(open(f,'rb').read()).hexdigest()
         if hashval in hashes:
             print("{} exists {} collides with {}".format(hashval, f, hashes[hashval]))
