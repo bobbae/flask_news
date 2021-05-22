@@ -3,6 +3,7 @@
 compiling it causes compiler error:
 
 > v run main.v
+
 ```
 ==================
 /tmp/v/main.10348224924354696555.tmp.c:9094: error: struct or union expected
