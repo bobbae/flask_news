@@ -1,6 +1,6 @@
 Another compilation error
 
-````
+```
 $ v run lisp.v
 ==================
 /tmp/v/lisp.6924900048525050803.tmp.c:9277: error: invalid operand types for binary operation
@@ -18,4 +18,4 @@ If you were not working with C interop, this is a compiler bug, please report th
 https://github.com/vlang/v/issues/new/choose
 
 You can also use #help on Discord: https://discord.gg/vlang
-````
+```
