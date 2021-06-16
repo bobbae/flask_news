@@ -1,4 +1,7 @@
 package xkcd
 
-func Test1() {
+import "fmt"
+
+func Test1(a1 string) {
+	fmt.Println(a1)
 }
