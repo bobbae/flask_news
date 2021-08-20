@@ -63,7 +63,7 @@ func GetDNSRecords(zone string) ([]cloudflare.DNSRecord, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	
 	records, err := api.DNSRecords(zoneID, cloudflare.DNSRecord{})
 	if err != nil {
 		return nil, err
