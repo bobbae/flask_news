@@ -115,7 +115,6 @@ def get_news(source,page,limit):
             b = a
             a.source = source
             a.summary = cleanhtml(a.summary)
-            a.summary = a.summary[:200]
             retval.append(b)
     return retval
 
